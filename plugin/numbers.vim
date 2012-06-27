@@ -1,5 +1,22 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" File:           numbers.vim
+" Maintainer:     Mahdi Yusuf yusuf.mahdi@gmail.com
+" Version:        0.1.0
+" Description:    vim global plugin for better line numbers.
+" Last Change:    26 June, 2012
+" License:        MIT License
+" Location:       plugin/numbers.vim
+" Website:        https://github.com/myusuf3/numbers.vim
+"
+" See numbers.txt for help.  This can be accessed by doing:
+"
+" :helptags ~/.vim/doc
+" :help numbers
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 let s:numbers_version = '0.1.0'
 
+"Allow use of line continuation
 let s:save_cpo = &cpo
 set cpo&vim
 
@@ -11,31 +28,22 @@ if exists("g:numbers")
             finish
 endif
 
-let g:numbers = 1
-let g:mode = 0
-let g:center = 1 
+let g:numbers=1
+let g:mode=0
+let g:center=1 
 
-" Triggers mode based on events
-autocmd InsertEnter * :call SetNumbers()
-autocmd InsertLeave * :call SetRelative()
-autocmd BufNewFile  * :call ResetNumber()
-autocmd BufReadPost * :call ResetNumber()
-autocmd FocusLost   * :call Uncenter()
-autocmd FocusGained * :call Center()
-
-
-function! s:SetNumber()
+function! SetNumbers()
     let g:mode = 1
-    call ResetNumber()
+    call ResetNumbers()
 endfunc
 
-function! s:SetRelative()
+function! SetRelative()
     let g:mode = 0
-    call ResetNumber()
+    call ResetNumbers()
 endfunc
 
-function! s:NumbersToggle()
-    if (&number == 1)
+function! NumbersToggle()
+    if (g:mode == 1)
         set relativenumber
     else
         set number
@@ -54,13 +62,22 @@ endfunc
 
 function! Center()
     let g:center = 1
-    call ResetNumber()
+    call ResetNumbers()
 endfunc
 
 function! Uncenter()
     let g:center = 0
-    call ResetNumber()
+    call ResetNumbers()
 endfunc
 
+" Triggers mode based on events
+autocmd InsertEnter * :call SetNumbers()
+autocmd InsertLeave * :call SetRelative()
+autocmd BufNewFile  * :call ResetNumbers()
+autocmd BufReadPost * :call ResetNumbers()
+autocmd FocusLost   * :call Uncenter()
+autocmd FocusGained * :call Center()
 
-command! -nargs=0 NumbersToggle call numbers#NumbersToggle()
+
+" reset &cpo back to users setting
+let &cpo = s:save_cpo
