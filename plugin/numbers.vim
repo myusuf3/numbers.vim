@@ -1,32 +1,23 @@
-if (exists('g:numbers') && g:numbers)  || v:version <= 703 || &cp
-    finish
-endif
+"   if exists('g:numbers')  || v:version <= 703 || &cp
+"       finish
+"   endif
 
-let g:numbers = 1
-let g:mode = 0
-let g:center = 1 
+let g:numbers=1
+let g:mode=0
+let g:center=1 
 
-" Triggers mode based on events
-autocmd InsertEnter * :call SetNumbers()
-autocmd InsertLeave * :call SetRelative()
-autocmd BufNewFile  * :call ResetNumber()
-autocmd BufReadPost * :call ResetNumber()
-autocmd FocusLost   * :call Uncenter()
-autocmd FocusGained * :call Center()
-
-
-function! s:SetNumber()
+function! SetNumbers()
     let g:mode = 1
-    call ResetNumber()
+    call ResetNumbers()
 endfunc
 
-function! s:SetRelative()
+function! SetRelative()
     let g:mode = 0
-    call ResetNumber()
+    call ResetNumbers()
 endfunc
 
-function! s:NumbersToggle()
-    if (&number == 1)
+function! NumbersToggle()
+    if (g:mode == 1)
         set relativenumber
     else
         set number
@@ -45,13 +36,19 @@ endfunc
 
 function! Center()
     let g:center = 1
-    call ResetNumber()
+    call ResetNumbers()
 endfunc
 
 function! Uncenter()
     let g:center = 0
-    call ResetNumber()
+    call ResetNumbers()
 endfunc
 
+" Triggers mode based on events
+autocmd InsertEnter * :call SetNumbers()
+autocmd InsertLeave * :call SetRelative()
+autocmd BufNewFile  * :call ResetNumbers()
+autocmd BufReadPost * :call ResetNumbers()
+autocmd FocusLost   * :call Uncenter()
+autocmd FocusGained * :call Center()
 
-command! -nargs=0 NumbersToggle call numbers#NumbersToggle()
