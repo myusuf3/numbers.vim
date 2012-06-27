@@ -78,6 +78,8 @@ autocmd BufReadPost * :call ResetNumbers()
 autocmd FocusLost   * :call Uncenter()
 autocmd FocusGained * :call Center()
 
+" Commands
+command! -nargs=0 NumbersToggle call NumbersToggle()
 
 " reset &cpo back to users setting
 let &cpo = s:save_cpo
