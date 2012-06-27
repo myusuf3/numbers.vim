@@ -71,12 +71,14 @@ function! Uncenter()
 endfunc
 
 " Triggers mode based on events
-autocmd InsertEnter * :call SetNumbers()
-autocmd InsertLeave * :call SetRelative()
-autocmd BufNewFile  * :call ResetNumbers()
-autocmd BufReadPost * :call ResetNumbers()
-autocmd FocusLost   * :call Uncenter()
-autocmd FocusGained * :call Center()
+augroup NumbersAug
+    autocmd InsertEnter * :call SetNumbers()
+    autocmd InsertLeave * :call SetRelative()
+    autocmd BufNewFile  * :call ResetNumbers()
+    autocmd BufReadPost * :call ResetNumbers()
+    autocmd FocusLost   * :call Uncenter()
+    autocmd FocusGained * :call Center()
+augroup END
 
 " Commands
 command! -nargs=0 NumbersToggle call NumbersToggle()
