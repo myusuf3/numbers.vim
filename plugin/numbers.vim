@@ -1,5 +1,14 @@
-if (exists('g:numbers') && g:numbers)  || v:version <= 703 || &cp
-    finish
+let s:numbers_version = '0.1.0'
+
+let s:save_cpo = &cpo
+set cpo&vim
+
+if exists("g:numbers")
+            \ || v:version < 700
+            \ || v:version == 703 && !has('patch338')
+            \ || &compatible
+            let &cpo = s:save_cpo
+            finish
 endif
 
 let g:numbers = 1
