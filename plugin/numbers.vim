@@ -74,6 +74,7 @@ endfunc
 
 " Triggers mode based on events
 augroup NumbersAug
+    au!
     autocmd InsertEnter * :call SetNumbers()
     autocmd InsertLeave * :call SetRelative()
     autocmd BufNewFile  * :call ResetNumbers()
