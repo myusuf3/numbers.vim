@@ -54,4 +54,4 @@ function! Uncenter()
 endfunc
 
 
-command! -nargs=0 NumbersToggle call NumbersToggle()
+command! -nargs=0 NumbersToggle call numbers#NumbersToggle()
