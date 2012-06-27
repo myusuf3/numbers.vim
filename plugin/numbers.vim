@@ -44,8 +44,10 @@ endfunc
 
 function! NumbersToggle()
     if (g:mode == 1)
+        let g:mode = 0
         set relativenumber
     else
+        let g:mode = 1
         set number
     endif
 endfunc
