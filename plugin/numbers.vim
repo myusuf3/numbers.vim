@@ -20,11 +20,10 @@ let s:numbers_version = '0.1.0'
 let s:save_cpo = &cpo
 set cpo&vim
 
-if exists("g:numbers")
-            \ || v:version <= 703
-            \ || &cp
-            let &cpo = s:save_cpo
-            finish
+if exists("g:numbers") || v:version > 703 || &cp
+    let &cpo = s:save_cpo
+    echom 'failed'
+    finish
 endif
 
 let g:numbers=1
