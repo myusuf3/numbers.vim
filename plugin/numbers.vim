@@ -21,8 +21,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 if exists("g:numbers")
-            \ || v:version < 700
-            \ || v:version == 703 
+            \ || v:version <= 703
             \ || &cp
             let &cpo = s:save_cpo
             finish
