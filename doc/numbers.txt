@@ -28,6 +28,7 @@ Help on using numbers                                                   *numbers
  3. CREDITS                                                       *numbers-credits*
 
  I would like to thanks Steve Losh and the nice guys in the #vim IRC for 
- all there help. 
+ all their help.
+ 
 
  vim:tw=78:ts=8:ft=help:norl:
