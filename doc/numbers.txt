@@ -13,15 +13,21 @@ Help on using numbers                                                   *numbers
 ==============================================================================
  1. INTRODUCTION                                                  *numbers-intro*
 
+  A free, open source plugin will alternate between relative numbering (normal
+  mode) and absolute numbering (insert mode) depending on the mode you are in.
+  Also provides convenient mappable NumberToggle function.
 
 ==============================================================================
- 2. CONFIGURATION                                         *numbers-configuration*
+ 2. CONFIGURATION                                                 *numbers-configuration*
 
+  There is a convenient function for toggling lines numbers e.g.
 
-
+  nnoremap <F3> :NumbersToggle<CR>
 
 ==============================================================================
- 3. CREDITS                                                        *numbers-credits*
+ 3. CREDITS                                                       *numbers-credits*
 
+ I would like to thanks Steve Losh and the nice guys in the #vim IRC for 
+ all there help. 
 
  vim:tw=78:ts=8:ft=help:norl:
