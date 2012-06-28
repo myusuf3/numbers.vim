@@ -22,7 +22,7 @@ set cpo&vim
 
 if exists("g:numbers")
             \ || v:version < 700
-            \ || v:version == 703 && !has('patch338')
+            \ || v:version == 703 
             \ || &compatible
             let &cpo = s:save_cpo
             finish
