@@ -1,0 +1,27 @@
+*numbers.txt*    For Vim version 7.3
+
+
+            VIM REFERENCE MANUAL by Mahdi Yusuf
+
+
+Help on using numbers                                                   *numbers*
+
+1. Introduction             |numbers-intro|
+2. Configuration            |numbers-configuration|
+3. Credits                  |numbers-credits|
+
+==============================================================================
+ 1. INTRODUCTION                                                  *numbers-intro*
+
+
+==============================================================================
+ 2. CONFIGURATION                                         *numbers-configuration*
+
+
+
+
+==============================================================================
+ 3. CREDITS                                                        *numbers-credits*
+
+
+ vim:tw=78:ts=8:ft=help:norl:
