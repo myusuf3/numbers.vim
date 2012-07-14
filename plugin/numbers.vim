@@ -76,6 +76,7 @@ augroup NumbersAug
     au!
     autocmd InsertEnter * :call SetNumbers()
     autocmd InsertLeave * :call SetRelative()
+    autocmd CursorMoved * :call SetRelative()
     autocmd BufNewFile  * :call ResetNumbers()
     autocmd BufReadPost * :call ResetNumbers()
     autocmd FocusLost   * :call Uncenter()
