@@ -45,9 +45,12 @@ function! NumbersToggle()
     if (g:mode == 1)
         let g:mode = 0
         set relativenumber
+    elseif (g:mode == 0)
+        let g:mode = 2
+        set number
     else
         let g:mode = 1
-        set number
+        set nonumber
     endif
 endfunc
 
@@ -76,6 +79,7 @@ augroup NumbersAug
     au!
     autocmd InsertEnter * :call SetNumbers()
     autocmd InsertLeave * :call SetRelative()
+    autocmd CursorMoved * :call SetRelative()
     autocmd BufNewFile  * :call ResetNumbers()
     autocmd BufReadPost * :call ResetNumbers()
     autocmd FocusLost   * :call Uncenter()
