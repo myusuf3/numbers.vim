@@ -74,6 +74,20 @@ function! Uncenter()
     call ResetNumbers()
 endfunc
 
+" To be technically correct this would be called on InsertLeave rather than
+" on BufReadPost, because what happens when someone opens a file with 999
+" lines and then adds one more? But I didn't have the heart to add overhead to
+" every single mode shift for the sake of such a rare occurrence.
+function! SetWidth()
+    if(line("$") >= 10000)
+        set numberwidth=6
+    elseif(line("$") >= 1000)
+        set numberwidth=5
+    else
+        set numberwidth=4
+    end
+endfunc
+
 " Triggers mode based on events
 augroup NumbersAug
     au!
@@ -81,6 +95,7 @@ augroup NumbersAug
     autocmd InsertLeave * :call SetRelative()
     autocmd BufNewFile  * :call ResetNumbers()
     autocmd BufReadPost * :call ResetNumbers()
+    autocmd BufReadPost * :call SetWidth()
     autocmd FocusLost   * :call Uncenter()
     autocmd FocusGained * :call Center()
 augroup END
