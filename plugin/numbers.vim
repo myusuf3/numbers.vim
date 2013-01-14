@@ -14,22 +14,25 @@
 " :help numbers
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let s:numbers_version = '0.1.0'
+let s:numbers_version = '0.2.0'
 
 "Allow use of line continuation
 let s:save_cpo = &cpo
 set cpo&vim
 
-if exists("g:numbers") || v:version < 703 || &cp
-    let &cpo = s:save_cpo
-    echom 'Requires Vim 7.3+'
-    echom 'Failed loading numbers.vim'
+if exists("g:loaded_numbers") && g:loaded_numbers
+    finish
+endif
+let g:loaded_numbers = 1
+
+if v:version < 703 || &cp
+    echomsg "numbers.vim: you need at least Vim 7.3 and 'nocp' set"
+    echomsg "Failed loading numbers.vim"
     finish
 endif
 
-let g:numbers=1
 let g:mode=0
-let g:center=1 
+let g:center=1
 
 function! SetNumbers()
     let g:mode = 1
