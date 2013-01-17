@@ -41,10 +41,19 @@ function! SetRelative()
     call ResetNumbers()
 endfunc
 
+function! SetOff()
+    let g:mode = 2
+    call ResetNumbers()
+endfunc
+
 function! NumbersToggle()
     if (g:mode == 1)
         let g:mode = 0
         set relativenumber
+    elseif (g:mode == 0)
+        let g:mode == 2
+        set nonumber
+        set norelativenumber
     else
         let g:mode = 1
         set number
@@ -56,6 +65,9 @@ function! ResetNumbers()
         set number
     elseif(g:mode == 0)
         set relativenumber
+    elseif(g:mode == 2)
+        set norelativenumber
+        set nonumber
     else
         set number
     end
