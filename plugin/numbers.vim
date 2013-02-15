@@ -25,6 +25,10 @@ if exists("g:loaded_numbers") && g:loaded_numbers
 endif
 let g:loaded_numbers = 1
 
+if (!exists('g:enable_numbers'))
+	let g:enable_numbers = 1
+endif
+
 if v:version < 703 || &cp
     echomsg "numbers.vim: you need at least Vim 7.3 and 'nocp' set"
     echomsg "Failed loading numbers.vim"
@@ -111,6 +115,6 @@ command! -nargs=0 NumbersOnOff call NumbersOnOff()
 " reset &cpo back to users setting
 let &cpo = s:save_cpo
 
-if (!exists('g:enable_numbers') || g:enable_numbers)
+if (g:enable_numbers)
 	call NumbersEnable()
 endif
