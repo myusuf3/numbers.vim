@@ -25,6 +25,10 @@ if exists("g:loaded_numbers") && g:loaded_numbers
 endif
 let g:loaded_numbers = 1
 
+if (!exists('g:enable_numbers'))
+	let g:enable_numbers = 1
+endif
+
 if v:version < 703 || &cp
     echomsg "numbers.vim: you need at least Vim 7.3 and 'nocp' set"
     echomsg "Failed loading numbers.vim"
@@ -74,19 +78,43 @@ function! Uncenter()
     call ResetNumbers()
 endfunc
 
-" Triggers mode based on events
-augroup NumbersAug
-    au!
-    autocmd InsertEnter * :call SetNumbers()
-    autocmd InsertLeave * :call SetRelative()
-    autocmd BufNewFile  * :call ResetNumbers()
-    autocmd BufReadPost * :call ResetNumbers()
-    autocmd FocusLost   * :call Uncenter()
-    autocmd FocusGained * :call Center()
-augroup END
+function! NumbersEnable()
+    let g:enable_numbers = 1
+    augroup NumbersAug
+        au!
+        autocmd InsertEnter * :call SetNumbers()
+        autocmd InsertLeave * :call SetRelative()
+        autocmd BufNewFile  * :call ResetNumbers()
+        autocmd BufReadPost * :call ResetNumbers()
+        autocmd FocusLost   * :call Uncenter()
+        autocmd FocusGained * :call Center()
+    augroup END
+endfunc
+
+function! NumbersDisable()
+    let g:enable_numbers = 0
+    augroup NumbersAug
+        au!
+    augroup END
+endfunc
+
+function! NumbersOnOff()
+    if (g:enable_numbers == 1)
+        call NumbersDisable()
+    else
+        call NumbersEnable()
+    endif
+endfunc
 
 " Commands
 command! -nargs=0 NumbersToggle call NumbersToggle()
+command! -nargs=0 NumbersEnable call NumbersEnable()
+command! -nargs=0 NumbersDisable call NumbersDisable()
+command! -nargs=0 NumbersOnOff call NumbersOnOff()
 
 " reset &cpo back to users setting
 let &cpo = s:save_cpo
+
+if (g:enable_numbers)
+	call NumbersEnable()
+endif
