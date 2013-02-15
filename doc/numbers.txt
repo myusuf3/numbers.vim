@@ -1,61 +1,72 @@
-*numbers.txt*    For Vim version 7.3
+*numbers.txt*  A plugin for intelligently toggling line numbers
 
+Author:  Mahdi Yusuf
 
-            VIM REFERENCE MANUAL by Mahdi Yusuf
+This plugin requires Vim 7.3 or later.
 
+Help on using numbers                                                *numbers*
 
-Help on using numbers                                                   *numbers*
-
-1. Introduction             |numbers-intro|
-2. Configuration            |numbers-configuration|
-3. Commands                 |numbers-commands|
-4. Credits                  |numbers-credits|
-
-==============================================================================
- 1. INTRODUCTION                                                  *numbers-intro*
-
-  A free, open source plugin will alternate between relative numbering (normal
-  mode) and absolute numbering (insert mode) depending on the mode you are in.
-  Also provides convenient mappable NumberToggle function.
+1. Introduction .......................... |numbers-intro|
+2. Configuration ......................... |numbers-configuration|
+3. Commands .............................. |numbers-commands|
+4. Credits ............................... |numbers-credits|
 
 ==============================================================================
- 2. CONFIGURATION                                                 *numbers-configuration*
+1. INTRODUCTION                                                *numbers-intro*
 
-  There is a convenient function for toggling lines numbers e.g.
+The |numbers| plugin intelligently alternates between relative numbering
+(|relativenumber|) and absolute numbering (|number|) depending on the mode you
+are in. In a GUI, it also functions based on whether or not the app has focus.
 
-  nnoremap <F3> :NumbersToggle<CR>
+Commands are included for toggling the line numbering method and for enabling
+and disabling the plugin.
+
+==============================================================================
+2. CONFIGURATION                                       *numbers-configuration*
+
                                                             *g:enable_numbers*
 g:enable_numbers~
+
 Default: 1
 
 If you want to disable contextual switching on startup, you can do the
 following: >
+
     let g:enable_numbers = 0
 <
 
+For convenience you may want to add a mapping for |:NumbersToggle| and
+|:NumbersOnOff|. For example: >
+
+    nnoremap <F3> :NumbersToggle<CR>
+    nnoremap <F4> :NumbersOnOff<CR>
+<
+
 ==============================================================================
- 3. Commands                                                *numbers-commands*
+3. COMMANDS                                                 *numbers-commands*
 
 :NumbersToggle                                                *:NumbersToggle*
-    Switch between *relativenumber* and *number*.
+    Switch between |relativenumber| and |number|.
 
 :NumbersEnable                                                *:NumbersEnable*
-    Enable contextual *relativenumber* / *number* switching.
+    Enable contextual |relativenumber| / |number| switching.
 
 :NumbersDisable                                              *:NumbersDisable*
-    Disable contextual *relativenumber* / *number* switching.
+    Disable contextual |relativenumber| / |number| switching.
 
 :NumbersOnOff                                                  *:NumbersOnOff*
-    Toggle the status of contextual *relativenumber* / *number* switching.
+    Toggle the status of contextual |relativenumber| / |number| switching.
 
-    If it was enabled, *:NumbersDisable* will be called. Conversely, if it
-    was disabled, *:NumbersEnable* will be called.
+    If it was enabled, |:NumbersDisable| will be called. Conversely, if it
+    was disabled, |:NumbersEnable| will be called.
 
 ==============================================================================
- 4. CREDITS                                                       *numbers-credits*
+4. CREDITS                                                   *numbers-credits*
 
- I would like to thanks Steve Losh and the nice guys in the #vim IRC for
- all their help.
+I would like to thank Steve Losh and the nice people in #vim on IRC for all
+their help.
+
+Ben Spaulding also contributed extra commands and documentation.
 
 
  vim:tw=78:ts=8:ft=help:norl:
