@@ -48,6 +48,9 @@ For convenience you may want to add a mapping for |:NumbersToggle| and
 :NumbersToggle                                                *:NumbersToggle*
     Switch between |relativenumber| and |number|.
 
+    Note that this toggles the kind of line numbers being shown -- it does not
+    toggle the plugin itself. For that, see |:NumbersOnOff|.
+
 :NumbersEnable                                                *:NumbersEnable*
     Enable contextual |relativenumber| / |number| switching.
 
