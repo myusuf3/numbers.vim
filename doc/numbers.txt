@@ -69,4 +69,4 @@ their help.
 Ben Spaulding also contributed extra commands and documentation.
 
 
- vim:tw=78:ts=8:ft=help:norl:
+vim:tw=78:ts=8:ft=help:norl:
