@@ -50,15 +50,27 @@ endfunc
 
 function! NumbersToggle()
     if (g:mode == 1)
+        if !&nu
+            return
+        end
+
         let g:mode = 0
         set relativenumber
     else
+        if !&relativenumber
+            return
+        end
+
         let g:mode = 1
         set number
     endif
 endfunc
 
 function! ResetNumbers()
+    if !&nu && !&relativenumber
+        return
+    end
+
     if(g:center == 0)
         set number
     elseif(g:mode == 0)
