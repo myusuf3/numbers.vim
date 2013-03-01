@@ -82,6 +82,8 @@ function! NumbersEnable()
     let g:enable_numbers = 1
     augroup NumbersAug
         au!
+        autocmd BufLeave *    :call SetNumbers()
+        autocmd BufEnter *    :call SetRelative()
         autocmd InsertEnter * :call SetNumbers()
         autocmd InsertLeave * :call SetRelative()
         autocmd BufNewFile  * :call ResetNumbers()
