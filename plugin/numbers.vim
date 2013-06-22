@@ -16,17 +16,13 @@
 
 let s:numbers_version = '0.2.0'
 
-"Allow use of line continuation
-let s:save_cpo = &cpo
-set cpo&vim
-
 if exists("g:loaded_numbers") && g:loaded_numbers
     finish
 endif
 let g:loaded_numbers = 1
 
 if (!exists('g:enable_numbers'))
-	let g:enable_numbers = 1
+    let g:enable_numbers = 1
 endif
 
 if v:version < 703 || &cp
@@ -34,6 +30,11 @@ if v:version < 703 || &cp
     echomsg "Failed loading numbers.vim"
     finish
 endif
+
+
+"Allow use of line continuation
+let s:save_cpo = &cpo
+set cpo&vim
 
 let g:mode=0
 let g:center=1
@@ -116,5 +117,5 @@ command! -nargs=0 NumbersOnOff call NumbersOnOff()
 let &cpo = s:save_cpo
 
 if (g:enable_numbers)
-	call NumbersEnable()
+    call NumbersEnable()
 endif
