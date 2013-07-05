@@ -55,17 +55,17 @@ function! NumbersToggle()
         set relativenumber
     else
         let s:mode = 1
-        set number
+        set norelativenumber
     endif
 endfunc
 
 function! ResetNumbers()
     if(s:center == 0)
-        set number
+        set norelativenumber
     elseif(s:mode == 0)
         set relativenumber
     else
-        set number
+        set norelativenumber
     end
 endfunc
 
