@@ -39,6 +39,14 @@ set cpo&vim
 let s:mode=0
 let s:center=1
 
+function! NumbersRelativeOff()
+    if v:version > 703 || (v:version == 703 && has('patch1115'))
+        set norelativenumber
+    elseif
+        set number
+    endif
+endfunction
+
 function! SetNumbers()
     let s:mode = 1
     call ResetNumbers()
@@ -55,17 +63,17 @@ function! NumbersToggle()
         set relativenumber
     else
         let s:mode = 1
-        set number
+        call NumbersRelativeOff()
     endif
 endfunc
 
 function! ResetNumbers()
     if(s:center == 0)
-        set number
+        call NumbersRelativeOff()
     elseif(s:mode == 0)
         set relativenumber
     else
-        set number
+        call NumbersRelativeOff()
     end
 endfunc
 
