@@ -4,8 +4,9 @@ numbers.vim
 numbers.vim is a plugin for intelligently toggling line numbers.
 
 This plugin alternates between relative numbering (`relativenumber`) and
-absolute numbering (`number`) depending on the mode you are in. In a GUI, it
-also functions based on whether or not the app has focus.
+absolute numbering (`number`) for the active window depending on the mode
+you are in. In a GUI, it also functions based on whether or not the app has
+focus.
 
 Commands are included for toggling the line numbering method and for enabling
 and disabling the plugin.
