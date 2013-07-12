@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " File:           numbers.vim
 " Maintainer:     Mahdi Yusuf yusuf.mahdi@gmail.com
-" Version:        0.1.0
+" Version:        0.4.0
 " Description:    vim global plugin for better line numbers.
 " Last Change:    26 June, 2012
 " License:        MIT License
@@ -14,7 +14,7 @@
 " :help numbers
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let s:numbers_version = '0.2.0'
+let s:numbers_version = '0.4.0'
 
 if exists("g:loaded_numbers") && g:loaded_numbers
     finish
@@ -55,17 +55,17 @@ function! NumbersToggle()
         set relativenumber
     else
         let s:mode = 1
-        set norelativenumber
+        set number
     endif
 endfunc
 
 function! ResetNumbers()
     if(s:center == 0)
-        set norelativenumber
+        set number
     elseif(s:mode == 0)
         set relativenumber
     else
-        set norelativenumber
+        set number
     end
 endfunc
 
