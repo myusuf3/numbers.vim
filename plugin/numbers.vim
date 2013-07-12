@@ -36,46 +36,46 @@ endif
 let s:save_cpo = &cpo
 set cpo&vim
 
-let g:mode=0
-let g:center=1
+let s:mode=0
+let s:center=1
 
 function! SetNumbers()
-    let g:mode = 1
+    let s:mode = 1
     call ResetNumbers()
 endfunc
 
 function! SetRelative()
-    let g:mode = 0
+    let s:mode = 0
     call ResetNumbers()
 endfunc
 
 function! NumbersToggle()
-    if (g:mode == 1)
-        let g:mode = 0
+    if (s:mode == 1)
+        let s:mode = 0
         set relativenumber
     else
-        let g:mode = 1
-        set number
+        let s:mode = 1
+        set norelativenumber
     endif
 endfunc
 
 function! ResetNumbers()
-    if(g:center == 0)
-        set number
-    elseif(g:mode == 0)
+    if(s:center == 0)
+        set norelativenumber
+    elseif(s:mode == 0)
         set relativenumber
     else
-        set number
+        set norelativenumber
     end
 endfunc
 
 function! Center()
-    let g:center = 1
+    let s:center = 1
     call ResetNumbers()
 endfunc
 
 function! Uncenter()
-    let g:center = 0
+    let s:center = 0
     call ResetNumbers()
 endfunc
 
