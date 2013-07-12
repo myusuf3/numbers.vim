@@ -89,6 +89,8 @@ function! NumbersEnable()
         autocmd BufReadPost * :call ResetNumbers()
         autocmd FocusLost   * :call Uncenter()
         autocmd FocusGained * :call Center()
+        autocmd WinEnter    * :call SetRelative()
+        autocmd WinLeave    * :call SetNumbers()
     augroup END
 endfunc
 
