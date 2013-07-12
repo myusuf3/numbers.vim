@@ -39,7 +39,20 @@ set cpo&vim
 let s:mode=0
 let s:center=1
 
-function! NumbersRelativeOff()
+" Always set up auto command group so that s:mode and s:center are up to date.
+augroup NumbersAug
+    au!
+    autocmd InsertEnter * :call s:set_number()
+    autocmd InsertLeave * :call s:set_relativenumber()
+    autocmd BufNewFile  * :call s:reset()
+    autocmd BufReadPost * :call s:reset()
+    autocmd FocusLost   * :call s:unset_center()
+    autocmd FocusGained * :call s:set_center()
+    autocmd WinEnter    * :call s:set_relativenumber()
+    autocmd WinLeave    * :call s:set_number()
+augroup END
+
+function! s:relative_off()
     if v:version > 703 || (v:version == 703 && has('patch1115'))
         set norelativenumber
     elseif
@@ -47,66 +60,60 @@ function! NumbersRelativeOff()
     endif
 endfunction
 
-function! SetNumbers()
-    let s:mode = 1
-    call ResetNumbers()
-endfunc
-
-function! SetRelative()
-    let s:mode = 0
-    call ResetNumbers()
-endfunc
-
-function! NumbersToggle()
-    if (s:mode == 1)
-        let s:mode = 0
-        set relativenumber
-    else
-        let s:mode = 1
-        call NumbersRelativeOff()
+function! s:reset()
+    if g:enable_numbers
+        if(s:center == 0)
+            call s:relative_off()
+        elseif(s:mode == 0)
+            set relativenumber
+        else
+            call s:relative_off()
+        endif
     endif
 endfunc
 
-function! ResetNumbers()
-    if(s:center == 0)
-        call NumbersRelativeOff()
-    elseif(s:mode == 0)
-        set relativenumber
-    else
-        call NumbersRelativeOff()
-    end
+function! s:set_number()
+    let s:mode = 1
+    call s:reset()
 endfunc
 
-function! Center()
+function! s:set_relativenumber()
+    let s:mode = 0
+    call s:reset()
+endfunc
+
+function! s:set_center()
     let s:center = 1
-    call ResetNumbers()
+    call s:reset()
 endfunc
 
-function! Uncenter()
+function! s:unset_center()
     let s:center = 0
-    call ResetNumbers()
+    call s:reset()
+endfunc
+
+function! NumbersToggle()
+    " Toggle s:mode between 0 and 1
+    let s:mode = (s:mode + 1) % 2
+
+    " Use s:reset to do the work.
+    call s:reset()
 endfunc
 
 function! NumbersEnable()
     let g:enable_numbers = 1
-    augroup NumbersAug
-        au!
-        autocmd InsertEnter * :call SetNumbers()
-        autocmd InsertLeave * :call SetRelative()
-        autocmd BufNewFile  * :call ResetNumbers()
-        autocmd BufReadPost * :call ResetNumbers()
-        autocmd FocusLost   * :call Uncenter()
-        autocmd FocusGained * :call Center()
-        autocmd WinEnter    * :call SetRelative()
-        autocmd WinLeave    * :call SetNumbers()
-    augroup END
+
+    " Remember the user's settings for nu and rnu so we can reset it later
+    let s:old_number = &number
+    let s:old_relativenumber = &relativenumber
 endfunc
 
 function! NumbersDisable()
     let g:enable_numbers = 0
-    augroup NumbersAug
-        au!
-    augroup END
+
+    " Reset nu and rnu to what it was before NumbersEnable was called.
+    let &number = s:old_number
+    let &relativenumber = s:old_relativenumber
 endfunc
 
 function! NumbersOnOff()
