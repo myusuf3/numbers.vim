@@ -42,7 +42,7 @@ let s:center=1
 function! NumbersRelativeOff()
     if v:version > 703 || (v:version == 703 && has('patch1115'))
         set norelativenumber
-    elseif
+    else
         set number
     endif
 endfunction
