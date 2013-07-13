@@ -89,6 +89,7 @@ endfunc
 
 function! NumbersEnable()
     let g:enable_numbers = 1
+    :set relativenumber
     augroup enable
         au!
         autocmd InsertEnter * :call SetNumbers()
@@ -104,8 +105,11 @@ endfunc
 
 function! NumbersDisable()
     let g:enable_numbers = 0
+    :set nu
+    :set nu!
     augroup disable
         au!
+        au! enable
     augroup END
 endfunc
 
