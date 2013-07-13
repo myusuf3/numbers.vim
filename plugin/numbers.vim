@@ -89,7 +89,7 @@ endfunc
 
 function! NumbersEnable()
     let g:enable_numbers = 1
-    augroup NumbersAug
+    augroup enable
         au!
         autocmd InsertEnter * :call SetNumbers()
         autocmd InsertLeave * :call SetRelative()
@@ -104,7 +104,7 @@ endfunc
 
 function! NumbersDisable()
     let g:enable_numbers = 0
-    augroup NumbersAug
+    augroup disable
         au!
     augroup END
 endfunc
