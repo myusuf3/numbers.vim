@@ -55,7 +55,7 @@ augroup END
 function! s:relative_off()
     if v:version > 703 || (v:version == 703 && has('patch1115'))
         set norelativenumber
-    elseif
+    else
         set number
     endif
 endfunction
