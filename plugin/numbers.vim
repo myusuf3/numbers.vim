@@ -25,12 +25,15 @@ if (!exists('g:enable_numbers'))
     let g:enable_numbers = 1
 endif
 
+if (!exists('g:ignore_nonumber'))
+    let g:ignore_nonumber = 1
+endif
+
 if v:version < 703 || &cp
     echomsg "numbers.vim: you need at least Vim 7.3 and 'nocp' set"
     echomsg "Failed loading numbers.vim"
     finish
 endif
-
 
 "Allow use of line continuation
 let s:save_cpo = &cpo
@@ -39,7 +42,19 @@ set cpo&vim
 let s:mode=0
 let s:center=1
 
+function! NumbersIgnored()
+    if g:ignore_nonumber && !&number
+        return 1
+    endif
+
+    return 0
+endfunction
+
 function! NumbersRelativeOff()
+    if NumbersIgnored()
+        return
+    endif
+
     if v:version > 703 || (v:version == 703 && has('patch1115'))
         set norelativenumber
     else
@@ -48,16 +63,28 @@ function! NumbersRelativeOff()
 endfunction
 
 function! SetNumbers()
+    if NumbersIgnored()
+        return
+    endif
+
     let s:mode = 1
     call ResetNumbers()
 endfunc
 
 function! SetRelative()
+    if NumbersIgnored()
+        return
+    endif
+
     let s:mode = 0
     call ResetNumbers()
 endfunc
 
 function! NumbersToggle()
+    if NumbersIgnored()
+        return
+    endif
+
     if (s:mode == 1)
         let s:mode = 0
         set relativenumber
@@ -68,6 +95,10 @@ function! NumbersToggle()
 endfunc
 
 function! ResetNumbers()
+    if NumbersIgnored()
+        return
+    endif
+
     if(s:center == 0)
         call NumbersRelativeOff()
     elseif(s:mode == 0)
@@ -78,11 +109,19 @@ function! ResetNumbers()
 endfunc
 
 function! Center()
+    if NumbersIgnored()
+        return
+    endif
+
     let s:center = 1
     call ResetNumbers()
 endfunc
 
 function! Uncenter()
+    if NumbersIgnored()
+        return
+    endif
+
     let s:center = 0
     call ResetNumbers()
 endfunc
