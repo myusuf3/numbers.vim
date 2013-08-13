@@ -14,7 +14,7 @@
 " :help numbers
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let s:numbers_version = '0.4.0'
+let s:numbers_version = '0.5.0'
 
 if exists("g:loaded_numbers") && g:loaded_numbers
     finish
@@ -23,11 +23,6 @@ let g:loaded_numbers = 1
 
 if (!exists('g:enable_numbers'))
     let g:enable_numbers = 1
-endif
-
-if !exists('g:numbers_blacklist')
-  " some sane defaults for blacklisting
-  let g:numbers_blacklist = ['^NERD_tree_\d\+$', '^__Tagbar__$', '^__Gundo\(_Preview\)\?__$']
 endif
 
 if v:version < 703 || &cp
@@ -92,27 +87,20 @@ function! Uncenter()
     call ResetNumbers()
 endfunc
 
-function! NumbersCheck(func)
-  " decotrator for executing au commands only if buffer is not on blacklist
-  let bufname = bufname('%')
-  if empty(filter(copy(g:numbers_blacklist), 'match(bufname, v:val) != -1'))
-    call function(a:func)()
-  endif
-endfunction
 
 function! NumbersEnable()
     let g:enable_numbers = 1
     :set relativenumber
     augroup enable
         au!
-        autocmd InsertEnter * :call NumbersCheck('SetNumbers')
-        autocmd InsertLeave * :call NumbersCheck('SetRelative')
-        autocmd BufNewFile  * :call NumbersCheck('ResetNumbers')
-        autocmd BufReadPost * :call NumbersCheck('ResetNumbers')
-        autocmd FocusLost   * :call NumbersCheck('Uncenter')
-        autocmd FocusGained * :call NumbersCheck('Center')
-        autocmd WinEnter    * :call NumbersCheck('SetRelative')
-        autocmd WinLeave    * :call NumbersCheck('SetNumbers')
+        autocmd InsertEnter * :call SetNumbers()
+        autocmd InsertLeave * :call SetRelative()
+        autocmd BufNewFile  * :call ResetNumbers()
+        autocmd BufReadPost * :call ResetNumbers()
+        autocmd FocusLost   * :call Uncenter()
+        autocmd FocusGained * :call Center()
+        autocmd WinEnter    * :call SetRelative()
+        autocmd WinLeave    * :call SetNumbers()
     augroup END
 endfunc
 
