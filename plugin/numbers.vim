@@ -25,6 +25,10 @@ if (!exists('g:enable_numbers'))
     let g:enable_numbers = 1
 endif
 
+if (!exists('g:numbers_exclude'))
+    let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m']
+endif
+
 if v:version < 703 || &cp
     echomsg "numbers.vim: you need at least Vim 7.3 and 'nocp' set"
     echomsg "Failed loading numbers.vim"
@@ -75,6 +79,10 @@ function! ResetNumbers()
     else
         call NumbersRelativeOff()
     end
+    if index(g:numbers_exclude, &ft) >= 0
+        setlocal norelativenumber
+        setlocal nonumber
+    endif
 endfunc
 
 function! Center()
