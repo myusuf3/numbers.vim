@@ -87,6 +87,13 @@ function! Uncenter()
     call ResetNumbers()
 endfunc
 
+" To be technically correct this would be called on InsertLeave rather than
+" on BufReadPost, because what happens when someone opens a file with 999
+" lines and then adds one more? But I didn't have the heart to add overhead to
+" every single mode shift for the sake of such a rare occurrence.
+function! SetWidth()
+    exec 'set numberwidth=' . (max([3, len(string(line('$')))]) + 1)
+endfunc
 
 function! NumbersEnable()
     let g:enable_numbers = 1
@@ -97,6 +104,7 @@ function! NumbersEnable()
         autocmd InsertLeave * :call SetRelative()
         autocmd BufNewFile  * :call ResetNumbers()
         autocmd BufReadPost * :call ResetNumbers()
+        autocmd BufReadPost * :call SetWidth()
         autocmd FocusLost   * :call Uncenter()
         autocmd FocusGained * :call Center()
         autocmd WinEnter    * :call SetRelative()
