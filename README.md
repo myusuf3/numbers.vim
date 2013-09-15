@@ -32,6 +32,19 @@ a `:BundleInstall`:
 
     Bundle "myusuf3/numbers.vim"
 
+Numbers Don't Belong    
+--------------------
+
+If you see numbers where they don't belong like in the help menus or other vim plugins be sure to add your plugins to the excludes list in your vimrc like so
+
+    let g:numbers_exclude = ['tagbar', 'gundo', 'minibufexpl', 'nerdtree']
+    
+The plugin by default contains the following:
+
+    let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m']$
+
+
+So be sure to include the superset in your vimrc or gvimrc
 
 Usage
 -----
