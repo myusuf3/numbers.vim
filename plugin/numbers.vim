@@ -1,9 +1,9 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " File:           numbers.vim
 " Maintainer:     Mahdi Yusuf yusuf.mahdi@gmail.com
-" Version:        0.5.0
+" Version:        0.6.0
 " Description:    vim global plugin for better line numbers.
-" Last Change:    12 August, 2013
+" Last Change:    15 September, 2013
 " License:        MIT License
 " Location:       plugin/numbers.vim
 " Website:        https://github.com/myusuf3/numbers.vim
