@@ -26,7 +26,7 @@ if (!exists('g:enable_numbers'))
 endif
 
 if (!exists('g:numbers_exclude'))
-    let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m']
+    let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m', 'nerdtree']
 endif
 
 if v:version < 703 || &cp
