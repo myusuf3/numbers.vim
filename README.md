@@ -55,6 +55,7 @@ may want to add mappings in your `.vimrc` for some of the commands, e.g.,
     nnoremap <F3> :NumbersToggle<CR>
     nnoremap <F4> :NumbersOnOff<CR>
 
+You may also wish to add `set number` as well, if you wish to turn line numbering on by default.
 
 [p]: https://github.com/tpope/vim-pathogen
 [v]: https://github.com/gmarik/vundle
