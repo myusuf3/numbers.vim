@@ -26,7 +26,7 @@ if (!exists('g:enable_numbers'))
 endif
 
 if (!exists('g:numbers_exclude'))
-    let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m', 'nerdtree']
+    let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m', 'nerdtree', "[[buffergator-buffers]]"]
 endif
 
 if v:version < 703 || &cp
@@ -79,7 +79,7 @@ function! ResetNumbers()
     else
         call NumbersRelativeOff()
     end
-    if index(g:numbers_exclude, &ft) >= 0
+    if index(g:numbers_exclude, &ft) >= 0 || index(g:numbers_exclude, @%) >= 0
         setlocal norelativenumber
         setlocal nonumber
     endif
