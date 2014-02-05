@@ -44,10 +44,10 @@ let s:mode=0
 let s:center=1
 
 function! NumbersRelativeOff()
+    set number
+
     if v:version > 703 || (v:version == 703 && has('patch1115'))
         set norelativenumber
-    else
-        set number
     endif
 endfunction
 
@@ -116,6 +116,7 @@ function! NumbersDisable()
     let g:enable_numbers = 0
     :set nu
     :set nu!
+    :set nornu
     augroup disable
         au!
         au! enable
