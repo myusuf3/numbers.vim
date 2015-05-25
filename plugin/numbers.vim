@@ -16,6 +16,11 @@
 
 let s:numbers_version = '0.5.0'
 
+let s:original_numbers = 0
+if &g:number == 1
+    let s:original_numbers = 1
+endif
+
 if exists("g:loaded_numbers") && g:loaded_numbers
     finish
 endif
@@ -80,8 +85,12 @@ function! ResetNumbers()
         call NumbersRelativeOff()
     end
     if index(g:numbers_exclude, &ft) >= 0
+        if s:original_numbers == 0
+            setlocal nonumber
+        else
+            setlocal number
+        end
         setlocal norelativenumber
-        setlocal nonumber
     endif
 endfunc
 
