@@ -44,11 +44,11 @@ let s:mode=0
 let s:center=1
 
 function! NumbersRelativeOff()
+  let s:mode = 1
     if v:version > 703 || (v:version == 703 && has('patch1115'))
         set norelativenumber
-    else
-        set number
     endif
+  set number
 endfunction
 
 function! SetNumbers()
@@ -66,7 +66,6 @@ function! NumbersToggle()
         let s:mode = 0
         set relativenumber
     else
-        let s:mode = 1
         call NumbersRelativeOff()
     endif
 endfunc
