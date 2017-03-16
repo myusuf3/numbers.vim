@@ -44,7 +44,10 @@ let s:mode=0
 let s:center=1
 
 function! NumbersRelativeOff()
-    if v:version > 703 || (v:version == 703 && has('patch1115'))
+    if has('nvim')
+        set norelativenumber
+        set number
+    elseif v:version > 703 || (v:version == 703 && has('patch1115'))
         set norelativenumber
     else
         set number
