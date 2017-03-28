@@ -64,10 +64,19 @@ function! SetRelative()
     call ResetNumbers()
 endfunc
 
+function! SetOff()
+    let g:mode = 2
+    call ResetNumbers()
+endfunc
+
 function! NumbersToggle()
     if (s:mode == 1)
         let s:mode = 0
         set relativenumber
+    elseif (g:mode == 0)
+        let g:mode == 2
+        set nonumber
+        set norelativenumber
     else
         let s:mode = 1
         call NumbersRelativeOff()
@@ -79,6 +88,9 @@ function! ResetNumbers()
         call NumbersRelativeOff()
     elseif(s:mode == 0)
         set relativenumber
+    elseif(g:mode == 2)
+        set norelativenumber
+        set nonumber
     else
         call NumbersRelativeOff()
     end
