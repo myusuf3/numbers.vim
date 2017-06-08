@@ -82,7 +82,7 @@ function! ResetNumbers()
     else
         call NumbersRelativeOff()
     end
-    if index(g:numbers_exclude, &ft) >= 0
+    if index(g:numbers_exclude, &ft) >= 0 || index(g:numbers_exclude, &buftype) >= 0
         setlocal norelativenumber
         setlocal nonumber
     endif
