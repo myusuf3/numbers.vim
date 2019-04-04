@@ -41,7 +41,7 @@ If you see numbers where they don't belong like in the help menus or other vim p
     
 The plugin by default contains the following:
 
-    let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m']$
+    let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m']
 
 
 So be sure to include the superset in your vimrc or gvimrc
