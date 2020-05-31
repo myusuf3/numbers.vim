@@ -25,8 +25,12 @@ if (!exists('g:enable_numbers'))
     let g:enable_numbers = 1
 endif
 
-if (!exists('g:numbers_exclude'))
-    let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m', 'nerdtree', 'Mundo', 'MundoDiff']
+if (!exists('g:numbers_exclude_filetypes'))
+    let g:numbers_exclude_filetypes = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m', 'nerdtree', 'Mundo', 'MundoDiff']
+endif
+
+if (!exists('g:numbers_exclude_buftypes'))
+    let g:numbers_exclude_buftypes = [ 'acwrite', 'help', 'nofile', 'nowrite', 'quickfix', 'terminal' ]
 endif
 
 if v:version < 703 || &cp
@@ -34,7 +38,6 @@ if v:version < 703 || &cp
     echomsg "Failed loading numbers.vim"
     finish
 endif
-
 
 "Allow use of line continuation
 let s:save_cpo = &cpo
@@ -82,7 +85,7 @@ function! ResetNumbers()
     else
         call NumbersRelativeOff()
     end
-    if index(g:numbers_exclude, &ft) >= 0
+    if index(g:numbers_exclude_filetypes, &ft) >= 0 || index(g:numbers_exclude_buftypes, &bt) >= 0
         setlocal norelativenumber
         setlocal nonumber
     endif
