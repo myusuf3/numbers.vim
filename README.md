@@ -67,5 +67,15 @@ Vim 7.4
 If you are lucky enough to be a Vim 7.4 user, you may experience unexpected
 behaviour if `set number` is not present in your `~/.vimrc`.
 
+Tests
+-----
+
+    ./test/run.sh            # every case, against both vim and neovim
+    ./test/run.sh toggle     # a single case
+
+Each case in `test/cases/` runs in its own editor process and asserts on
+`number` and `relativenumber`. Editors that are not installed are skipped. CI
+runs the same script.
+
 [p]: https://github.com/tpope/vim-pathogen
 [v]: https://github.com/gmarik/vundle
