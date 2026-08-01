@@ -82,7 +82,9 @@ function! ResetNumbers()
     else
         call NumbersRelativeOff()
     end
-    if index(g:numbers_exclude, &ft) >= 0
+    " Special buffers (help, terminal, quickfix, nofile) are number-free by
+    " default; don't put numbers back into them.
+    if index(g:numbers_exclude, &ft) >= 0 || &buftype !=# ''
         setlocal norelativenumber
         setlocal nonumber
     endif
@@ -118,11 +120,10 @@ endfunc
 
 function! NumbersDisable()
     let g:enable_numbers = 0
-    :set nu
-    :set nu!
-    augroup disable
+    set norelativenumber
+    set nonumber
+    augroup enable
         au!
-        au! enable
     augroup END
 endfunc
 
