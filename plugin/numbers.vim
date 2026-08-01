@@ -26,7 +26,7 @@ if (!exists('g:enable_numbers'))
 endif
 
 if (!exists('g:numbers_exclude'))
-    let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m', 'nerdtree', 'Mundo', 'MundoDiff']
+    let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m', 'nerdtree', 'Mundo', 'MundoDiff', 'buffergator', 'easybuffer']
 endif
 
 " Every non-empty 'buftype' in Vim and Neovim: these buffers are number-free by
@@ -118,10 +118,17 @@ function! NumbersEnable()
         autocmd InsertLeave * :call SetRelative()
         autocmd BufNewFile  * :call ResetNumbers()
         autocmd BufReadPost * :call ResetNumbers()
+        " Plugin windows often set 'filetype' after BufNewFile has already
+        " fired, so re-check the exclude list once it is actually set.
+        autocmd FileType    * :call ResetNumbers()
         autocmd FocusLost   * :call Uncenter()
         autocmd FocusGained * :call Center()
         autocmd WinEnter    * :call SetRelative()
         autocmd WinLeave    * :call SetNumbers()
+        " Vim leaves numbers in a terminal window until it is re-entered.
+        if exists('##TerminalOpen')
+            autocmd TerminalOpen * :call ResetNumbers()
+        endif
     augroup END
 endfunc
 

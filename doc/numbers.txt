@@ -40,7 +40,7 @@ following: >
 g:numbers_exclude~
 
 Default: ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m',
-          'nerdtree', 'Mundo', 'MundoDiff']
+          'nerdtree', 'Mundo', 'MundoDiff', 'buffergator', 'easybuffer']
 
 Filetypes that should show no line numbers at all. If a plugin window shows
 numbers where they don't belong, add its 'filetype' to the list: >
