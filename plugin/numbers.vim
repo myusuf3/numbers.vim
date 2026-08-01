@@ -64,13 +64,15 @@ function! SetRelative()
     call ResetNumbers()
 endfunc
 
+" Branch on the live option, not s:mode: the cached mode disagrees with the
+" gutter whenever the plugin never enabled itself (g:enable_numbers = 0).
 function! NumbersToggle()
-    if (s:mode == 1)
-        let s:mode = 0
-        set relativenumber
-    else
+    if (&relativenumber)
         let s:mode = 1
         call NumbersRelativeOff()
+    else
+        let s:mode = 0
+        set relativenumber
     endif
 endfunc
 
