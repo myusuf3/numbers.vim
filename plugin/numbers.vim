@@ -19,6 +19,14 @@ let s:numbers_version = '0.5.0'
 if exists("g:loaded_numbers") && g:loaded_numbers
     finish
 endif
+
+" Under vscode-neovim the gutter belongs to VSCode, which draws its own line
+" numbers. Switching them here changes nothing on screen and shifts the
+" extension's cursor position, so there is nothing worth doing.
+if exists('g:vscode')
+    finish
+endif
+
 let g:loaded_numbers = 1
 
 if (!exists('g:enable_numbers'))
