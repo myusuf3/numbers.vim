@@ -35,16 +35,23 @@ a `:BundleInstall`:
 Numbers Don't Belong    
 --------------------
 
-If you see numbers where they don't belong like in the help menus or other vim plugins be sure to add your plugins to the excludes list in your vimrc like so
+If you see numbers where they don't belong like in the help menus or other vim plugins be sure to add the filetypes used by your plugins to the excludes list in your vimrc like so
 
     let g:numbers_exclude = ['tagbar', 'gundo', 'minibufexpl', 'nerdtree']
-    
+
 The plugin by default contains the following:
 
-    let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m']$
-
+    let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m', 'nerdtree', 'Mundo', 'MundoDiff']
 
 So be sure to include the superset in your vimrc or gvimrc
+
+Plugin windows often leave `filetype` empty, which puts them out of reach of
+that list. Those are excluded by `buftype` instead, which by default covers
+every special buffer kind:
+
+    let g:numbers_exclude_buftypes = ['acwrite', 'help', 'nofile', 'nowrite', 'popup', 'prompt', 'quickfix', 'terminal']
+
+Shorten that list if you want line numbers back in one of those windows.
 
 Usage
 -----

@@ -29,6 +29,13 @@ if (!exists('g:numbers_exclude'))
     let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m', 'nerdtree', 'Mundo', 'MundoDiff']
 endif
 
+" Every non-empty 'buftype' in Vim and Neovim: these buffers are number-free by
+" default, and plugins that use them often leave 'filetype' empty, which puts
+" them out of reach of g:numbers_exclude.
+if (!exists('g:numbers_exclude_buftypes'))
+    let g:numbers_exclude_buftypes = ['acwrite', 'help', 'nofile', 'nowrite', 'popup', 'prompt', 'quickfix', 'terminal']
+endif
+
 if v:version < 703 || &cp
     echomsg "numbers.vim: you need at least Vim 7.3 and 'nocp' set"
     echomsg "Failed loading numbers.vim"
@@ -84,9 +91,7 @@ function! ResetNumbers()
     else
         call NumbersRelativeOff()
     end
-    " Special buffers (help, terminal, quickfix, nofile) are number-free by
-    " default; don't put numbers back into them.
-    if index(g:numbers_exclude, &ft) >= 0 || &buftype !=# ''
+    if index(g:numbers_exclude, &ft) >= 0 || index(g:numbers_exclude_buftypes, &bt) >= 0
         setlocal norelativenumber
         setlocal nonumber
     endif

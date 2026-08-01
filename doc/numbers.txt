@@ -36,6 +36,37 @@ following: >
     let g:enable_numbers = 0
 <
 
+                                                          *g:numbers_exclude*
+g:numbers_exclude~
+
+Default: ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m',
+          'nerdtree', 'Mundo', 'MundoDiff']
+
+Filetypes that should show no line numbers at all. If a plugin window shows
+numbers where they don't belong, add its 'filetype' to the list: >
+
+    let g:numbers_exclude = ['tagbar', 'gundo', 'minibufexpl', 'nerdtree']
+<
+Setting this replaces the default list rather than adding to it, so include
+the entries you still want.
+
+                                                 *g:numbers_exclude_buftypes*
+g:numbers_exclude_buftypes~
+
+Default: ['acwrite', 'help', 'nofile', 'nowrite', 'popup', 'prompt',
+          'quickfix', 'terminal']
+
+The same thing for 'buftype'. Terminal, help and quickfix windows are
+number-free in Vim and Neovim by default, and plugin windows frequently leave
+'filetype' empty, which puts them out of reach of |g:numbers_exclude|.
+
+The default covers every non-empty 'buftype'. Shorten the list to let numbers
+back into a kind of window -- for example, to keep them in the quickfix
+window: >
+
+    let g:numbers_exclude_buftypes = ['help', 'nofile', 'terminal']
+<
+
 For convenience you may want to add a mapping for |:NumbersToggle| and
 |:NumbersOnOff|. For example: >
 
