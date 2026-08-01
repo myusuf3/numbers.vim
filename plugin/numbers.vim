@@ -58,6 +58,12 @@ set cpo&vim
 let s:mode=0
 let s:center=1
 
+" Vim 7.3 before patch 1115 treats 'number' and 'relativenumber' as mutually
+" exclusive, so showing both at once is only possible after that.
+function! s:HasHybrid()
+    return has('nvim') || v:version > 703 || (v:version == 703 && has('patch1115'))
+endfunction
+
 function! NumbersRelativeOff()
     if has('nvim')
         set norelativenumber
@@ -107,6 +113,12 @@ function! ResetNumbers()
     if(s:center == 0)
         call NumbersRelativeOff()
     elseif(s:mode == 0)
+        " Undo the setlocal nonumber below for a window that is no longer
+        " excluded. Taken from the global value so that a user who turned
+        " numbers off themselves is not overridden.
+        if s:HasHybrid() && &g:number
+            setlocal number
+        endif
         set relativenumber
     else
         call NumbersRelativeOff()
