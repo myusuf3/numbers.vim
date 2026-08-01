@@ -52,11 +52,16 @@ For convenience you may want to add a mapping for |:NumbersToggle| and
     Note that this toggles the kind of line numbers being shown -- it does not
     toggle the plugin itself. For that, see |:NumbersOnOff|.
 
+    The switch lasts until the next mode change or window switch, which puts
+    the contextual switching back in charge. To stay on plain |number| for
+    good, use |:NumbersDisable|.
+
 :NumbersEnable                                                *:NumbersEnable*
     Enable contextual |relativenumber| / |number| switching.
 
 :NumbersDisable                                              *:NumbersDisable*
-    Disable contextual |relativenumber| / |number| switching.
+    Disable contextual |relativenumber| / |number| switching, leaving plain
+    |number| line numbers.
 
 :NumbersOnOff                                                  *:NumbersOnOff*
     Toggle the status of contextual |relativenumber| / |number| switching.

@@ -121,7 +121,7 @@ endfunc
 function! NumbersDisable()
     let g:enable_numbers = 0
     set norelativenumber
-    set nonumber
+    set number
     augroup enable
         au!
     augroup END
