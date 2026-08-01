@@ -1,0 +1,22 @@
+name: tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # vim-nox rather than vim: the plain package is built without +terminal,
+      # which the buftype cases need.
+      - name: Install editors
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y vim-nox neovim
+
+      - name: Run tests
+        run: ./test/run.sh
