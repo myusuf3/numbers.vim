@@ -145,6 +145,14 @@ function! NumbersEnable()
         autocmd FocusGained * :call Center()
         autocmd WinEnter    * :call SetRelative()
         autocmd WinLeave    * :call SetNumbers()
+        " Ex commands address absolute lines, so :14y should be able to read
+        " line 14 off the gutter. Only the : command line: searches take no
+        " line numbers, and switching for them would just be flicker. The
+        " redraw is needed because opening the command line does not cause one.
+        if exists('##CmdlineEnter')
+            autocmd CmdlineEnter : :call SetNumbers() | redraw
+            autocmd CmdlineLeave : :call SetRelative()
+        endif
         " Opening a terminal enters no window, so nothing above fires and the
         " numbers linger until it is left and re-entered. Vim and Neovim spell
         " the event differently.

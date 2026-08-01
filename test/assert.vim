@@ -3,6 +3,9 @@
 " Results go to stdout via writefile() because Vim's silent mode (-es), which
 " the runner needs in order to capture output, discards :echo.
 
+" Cases edit throwaway files in /tmp; swapfiles only produce noisy warnings.
+set noswapfile
+
 let g:t_results = []
 let g:t_failed = 0
 
@@ -31,7 +34,10 @@ function! TypeSomething() abort
     execute "normal! ia\<Esc>"
 endfunction
 
+" The runner treats a missing "done" line as a failure: a case that dies
+" partway through would otherwise exit 0 and be counted as a pass.
 function! TestDone() abort
+    call add(g:t_results, '  done')
     call writefile(g:t_results, '/dev/stdout', 'a')
     if g:t_failed > 0
         cquit

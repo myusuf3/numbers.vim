@@ -7,11 +7,17 @@
 # `" SETUP: <commands>` line, which the runner passes as --cmd before the
 # plugin loads.
 #
+# A case passes only if the editor exits 0 and the case printed its closing
+# "done" line. Anything else -- an error partway through, a prompt the editor
+# is waiting on, a crash -- is a failure.
+#
 # Usage: test/run.sh [case-name ...]
 
 set -u
 
 root=$(cd "$(dirname "$0")/.." && pwd)
+timeout_secs=${NUMBERS_TEST_TIMEOUT:-30}
+
 cases=()
 if [ $# -gt 0 ]; then
     for name in "$@"; do
@@ -30,28 +36,47 @@ passed=0
 failed=0
 ran_any=0
 
+# Bash has no portable timeout(1) -- macOS does not ship one -- so poll.
 run_case() {
-    local editor=$1 path=$2 setup args output status
-    setup=$(grep -m1 '^" SETUP: ' "$path" | cut -d: -f2-)
+    local editor=$1 path=$2
+    local setup args cmd tmp pid waited status
 
+    setup=$(grep -m1 '^" SETUP: ' "$path" | cut -d: -f2-)
     args=(--cmd "set rtp+=$root")
     if [ -n "$setup" ]; then
         args+=(--cmd "$setup")
     fi
 
-    # Stdin is closed throughout: an editor that hits an unexpected prompt
-    # should fail the case rather than block the run forever.
     if [ "$editor" = nvim ]; then
-        output=$(nvim --headless --clean "${args[@]}" -S "$path" </dev/null 2>&1)
-        status=$?
+        cmd=(nvim --headless --clean "${args[@]}" -S "$path")
     else
         # -u NORC keeps plugin loading enabled; -u NONE would disable it.
         # -es is silent Ex mode, which is why cases report via writefile().
-        output=$(vim -es -u NORC -N "${args[@]}" -S "$path" </dev/null 2>&1 | tr -d '\r')
-        status=${PIPESTATUS[0]}
+        cmd=(vim -es -u NORC -N "${args[@]}" -S "$path")
     fi
 
-    echo "$output"
+    tmp=$(mktemp)
+    # Stdin is closed so an unexpected prompt fails fast instead of blocking.
+    "${cmd[@]}" </dev/null >"$tmp" 2>&1 &
+    pid=$!
+
+    waited=0
+    while kill -0 "$pid" 2>/dev/null; do
+        if [ "$waited" -ge "$timeout_secs" ]; then
+            kill -9 "$pid" 2>/dev/null
+            wait "$pid" 2>/dev/null
+            tr -d '\r' <"$tmp"
+            rm -f "$tmp"
+            return 124
+        fi
+        sleep 1
+        waited=$((waited + 1))
+    done
+
+    wait "$pid"
+    status=$?
+    tr -d '\r' <"$tmp"
+    rm -f "$tmp"
     return $status
 }
 
@@ -66,10 +91,20 @@ for editor in vim nvim; do
     for path in "${cases[@]}"; do
         name=$(basename "$path" .vim)
         echo "$name"
-        if run_case "$editor" "$path"; then
-            passed=$((passed + 1))
-        else
+        out=$(run_case "$editor" "$path")
+        status=$?
+        echo "$out"
+
+        if [ "$status" -eq 124 ]; then
+            echo "  FAIL case timed out after ${timeout_secs}s"
             failed=$((failed + 1))
+        elif [ "$status" -ne 0 ]; then
+            failed=$((failed + 1))
+        elif ! printf '%s\n' "$out" | grep -q '^  done$'; then
+            echo "  FAIL case did not reach the end -- an error aborted it"
+            failed=$((failed + 1))
+        else
+            passed=$((passed + 1))
         fi
     done
     echo
