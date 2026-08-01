@@ -1,9 +1,9 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " File:           numbers.vim
 " Maintainer:     Mahdi Yusuf yusuf.mahdi@gmail.com
-" Version:        0.6.1
+" Version:        0.7.0
 " Description:    vim global plugin for better line numbers.
-" Last Change:    15 September, 2013
+" Last Change:    1 August, 2026
 " License:        MIT License
 " Location:       plugin/numbers.vim
 " Website:        https://github.com/myusuf3/numbers.vim
@@ -14,7 +14,7 @@
 " :help numbers
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let s:numbers_version = '0.5.0'
+let s:numbers_version = '0.7.0'
 
 if exists("g:loaded_numbers") && g:loaded_numbers
     finish
