@@ -8,6 +8,11 @@ absolute numbering (`number`) for the active window depending on the mode
 you are in. In a GUI, it also functions based on whether or not the app has
 focus.
 
+Numbers go absolute while you are in insert mode, while you are typing an Ex
+command (so the line in `:14y` can be read off the gutter), in inactive
+windows, and while the editor is unfocused. They are relative the rest of the
+time.
+
 Commands are included for toggling the line numbering method and for enabling
 and disabling the plugin.
 
