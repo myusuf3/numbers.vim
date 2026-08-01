@@ -67,6 +67,18 @@ Vim 7.4
 If you are lucky enough to be a Vim 7.4 user, you may experience unexpected
 behaviour if `set number` is not present in your `~/.vimrc`.
 
+VSCode
+------
+
+Under the [vscode-neovim][vn] extension the plugin disables itself. VSCode draws
+its own gutter, so switching `number` and `relativenumber` in Neovim has no
+effect on screen there, and it used to shift the cursor several columns to the
+right when entering insert mode.
+
+VSCode has the same feature built in:
+
+    "editor.lineNumbers": "relative"
+
 Tests
 -----
 
@@ -77,5 +89,6 @@ Each case in `test/cases/` runs in its own editor process and asserts on
 `number` and `relativenumber`. Editors that are not installed are skipped. CI
 runs the same script.
 
+[vn]: https://github.com/vscode-neovim/vscode-neovim
 [p]: https://github.com/tpope/vim-pathogen
 [v]: https://github.com/gmarik/vundle

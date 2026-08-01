@@ -22,6 +22,10 @@ or not the app has focus.
 Commands are included for toggling the line numbering method and for enabling
 and disabling the plugin.
 
+Under the vscode-neovim extension the plugin disables itself: VSCode draws its
+own gutter, so there is nothing for it to switch. Use VSCode's own
+"editor.lineNumbers": "relative" setting instead.
+
 ==============================================================================
 2. CONFIGURATION                                       *numbers-configuration*
 
