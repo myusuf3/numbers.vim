@@ -125,9 +125,14 @@ function! NumbersEnable()
         autocmd FocusGained * :call Center()
         autocmd WinEnter    * :call SetRelative()
         autocmd WinLeave    * :call SetNumbers()
-        " Vim leaves numbers in a terminal window until it is re-entered.
+        " Opening a terminal enters no window, so nothing above fires and the
+        " numbers linger until it is left and re-entered. Vim and Neovim spell
+        " the event differently.
         if exists('##TerminalOpen')
             autocmd TerminalOpen * :call ResetNumbers()
+        endif
+        if exists('##TermOpen')
+            autocmd TermOpen * :call ResetNumbers()
         endif
     augroup END
 endfunc
