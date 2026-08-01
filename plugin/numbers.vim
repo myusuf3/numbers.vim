@@ -71,6 +71,18 @@ function! SetRelative()
     call ResetNumbers()
 endfunc
 
+" i_CTRL-O runs a single command in normal mode, firing InsertLeave and
+" InsertEnter around it. Switching for that round trip flips the numbers twice
+" while the user never really left insert mode. mode() reports the pending
+" state as niI, niR or niV; older Vims report neither and keep the old
+" behaviour.
+function! LeaveInsert()
+    if mode(1) =~# '^ni'
+        return
+    endif
+    call SetRelative()
+endfunc
+
 " Branch on the live option, not s:mode: the cached mode disagrees with the
 " gutter whenever the plugin never enabled itself (g:enable_numbers = 0).
 function! NumbersToggle()
@@ -115,7 +127,7 @@ function! NumbersEnable()
     augroup enable
         au!
         autocmd InsertEnter * :call SetNumbers()
-        autocmd InsertLeave * :call SetRelative()
+        autocmd InsertLeave * :call LeaveInsert()
         autocmd BufNewFile  * :call ResetNumbers()
         autocmd BufReadPost * :call ResetNumbers()
         " Plugin windows often set 'filetype' after BufNewFile has already
